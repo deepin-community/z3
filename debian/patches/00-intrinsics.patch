@@ -1,0 +1,18 @@
+Description: INTRINSICS are not universally available
+Author: Michael Tautschnig <mt@debian.org>
+Author: Fabian Wolff <fabi.wolff@arcor.de>
+Forwarded: https://github.com/Z3Prover/z3/pull/4504
+Last-Update: 2020-06-06
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/src/util/hwf.cpp
++++ b/src/util/hwf.cpp
+@@ -48,7 +48,7 @@
+ // clear to the compiler what instructions should be used. E.g., for sqrt(), the Windows compiler selects
+ // the x87 FPU, even when /arch:SSE2 is on.
+ // Luckily, these are kind of standardized, at least for Windows/Linux/macOS.
+-#if defined(__clang__) || defined(_M_ARM) && defined(_M_ARM64)
++#if (defined(__GNUC__) && !defined(__SSE2__)) || defined(_M_ARM) && defined(_M_ARM64)
+ #undef USE_INTRINSICS
+ #endif
+ 
