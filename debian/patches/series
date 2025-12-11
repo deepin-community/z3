@@ -1,3 +1,2 @@
 00-intrinsics.patch
 01-soname.patch
-02-fix-riscv-build.patch
