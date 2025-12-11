@@ -1,20 +1,52 @@
-z3 (4.8.12-deepin3) unstable; urgency=medium
+z3 (4.13.3-1) unstable; urgency=medium
 
-  * update version for rebuild.
+  * Non-maintainer upload.
+  * New upstream release
 
- -- liujianqiang <liujianqiang@uniontech.com>  Tue, 10 Jun 2025 15:25:23 +0800
+  [ Helmut Grohne ]
+  * Improve cross building. (Closes: #1086731)
+    + Multiarchify python3 dependency.
+  * Add nopython build profile.
+    + Conditionalize debhelper addons via Build-Depends.
+    + Let debhelper conditionalize --link-doc based on profiles.
+    + Unconditional python3-setuptools dependency needed even with <!nopython>.
+  * Tighten libz3-java -> libz3-dev dependency for doc linking.
 
-z3 (4.8.12-deepin2) unstable; urgency=medium
+ -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 04 Nov 2024 22:19:18 +0100
 
-  * fix RISC-V build by introduce a patch from upstream
+z3 (4.8.12-3.2) unstable; urgency=medium
 
- -- Chang Yang <yangchang@deepin.org>  Tue, 26 Sep 2023 13:14:34 +0800
+  * Non-maintainer upload.
+  * Fix FTBFS on mips64el (Closes: #1086725)
+    Thanks to Adrian Bunk for the patch
+  * Fix hurd-amd64 build (Closes: #1055476)
+    Thanks to Samuel Thibault for the patch
+  * Update standards version to 4.6.2, no changes needed.
+    Avoid explicitly specifying -Wl,--as-needed linker flag.
+  * Standards-Version: 4.7.0
 
-z3 (4.8.12-deepin1) unstable; urgency=medium
+ -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 04 Nov 2024 20:47:25 +0100
 
-  * Rebuild
+z3 (4.8.12-3.1) unstable; urgency=medium
 
- -- Deepin Packages Builder <packages@deepin.org>  Fri, 11 Nov 2022 18:06:38 +0800
+  * Non-maintainer upload.
+  * riscv64: link against -latomic (Closes: #1025343)
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Wed, 01 Feb 2023 13:06:03 +0100
+
+z3 (4.8.12-3) unstable; urgency=medium
+
+  * Do not use SSE2 unconditionally on i386
+    (Closes: #1020802, #1020516, #1016658, #1021926)
+
+ -- Karo Gyoker <karogyoker2+debbug@gmail.com>  Fri, 21 Oct 2022 19:24:40 +0200
+
+z3 (4.8.12-2) unstable; urgency=medium
+
+  * Fix a typo. Thanks to Boyuan Yang for the patch
+    (Closes: #1018962)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 03 Sep 2022 11:48:53 +0200
 
 z3 (4.8.12-1) unstable; urgency=medium
 
