@@ -1,18 +1,37 @@
-Description: INTRINSICS are not universally available
+Description: SSE2 is not universally available on x86_32
 Author: Michael Tautschnig <mt@debian.org>
 Author: Fabian Wolff <fabi.wolff@arcor.de>
-Forwarded: https://github.com/Z3Prover/z3/pull/4504
-Last-Update: 2020-06-06
+Author: Karo Gyoker <karogyoker2+debbug@gmail.com>
+Last-Update: 2022-10-19
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
---- a/src/util/hwf.cpp
-+++ b/src/util/hwf.cpp
-@@ -48,7 +48,7 @@
- // clear to the compiler what instructions should be used. E.g., for sqrt(), the Windows compiler selects
- // the x87 FPU, even when /arch:SSE2 is on.
- // Luckily, these are kind of standardized, at least for Windows/Linux/macOS.
--#if defined(__clang__) || defined(_M_ARM) && defined(_M_ARM64)
-+#if (defined(__GNUC__) && !defined(__SSE2__)) || defined(_M_ARM) && defined(_M_ARM64)
- #undef USE_INTRINSICS
+Index: z3/CMakeLists.txt
+===================================================================
+--- z3.orig/CMakeLists.txt
++++ z3/CMakeLists.txt
+@@ -256,7 +256,7 @@ endif()
+ # FP math
+ ################################################################################
+ # FIXME: Support ARM "-mfpu=vfp -mfloat-abi=hard"
+-if ((TARGET_ARCHITECTURE STREQUAL "x86_64") OR (TARGET_ARCHITECTURE STREQUAL "i686"))
++if ((TARGET_ARCHITECTURE STREQUAL "x86_64"))
+   if ((CMAKE_CXX_COMPILER_ID MATCHES "GNU") OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang") OR (CMAKE_CXX_COMPILER_ID MATCHES "Intel"))
+     set(SSE_FLAGS "-mfpmath=sse" "-msse" "-msse2")
+   elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+Index: z3/src/util/hwf.cpp
+===================================================================
+--- z3.orig/src/util/hwf.cpp
++++ z3/src/util/hwf.cpp
+@@ -53,9 +53,10 @@ Revision History:
+ #endif
+ 
+ #ifdef USE_INTRINSICS
+-#include <emmintrin.h>
++#define SIMDE_ENABLE_NATIVE_ALIASES
++#include <simde/x86/sse2.h>
+ #if defined(_MSC_VER) || defined(__SSE4_1__)
+-#include <smmintrin.h>
++#include <simde/x86/sse4.1.h>
+ #endif
  #endif
  
